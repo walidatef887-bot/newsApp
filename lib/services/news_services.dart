@@ -1,15 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:news_app/models/article_model.dart';
 
+import '../models/category_model.dart';
+
 class NewsServices {
   final Dio dio;
 
   NewsServices(this.dio);
 
-  Future<List<ArticleModel>> getNews() async {
+
+  Future<List<ArticleModel>> getNews(String category) async {
     try {
       var response = await dio.get(
-        'https://newsapi.org/v2/top-headlines?country=us&apiKey=72baa2c2ffda4742a531d0c496e9c7c9',
+        'https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=72baa2c2ffda4742a531d0c496e9c7c9',
       );
       Map<String, dynamic> jsonData = response.data;
 
@@ -19,9 +22,10 @@ class NewsServices {
 
       for (var article in articles) {
         ArticleModel articleModel = ArticleModel(
-          imageUrl: article["urlToImage"],
-          title: article["title"],
-          subTitle: article["description"],
+          imageUrl: article["urlToImage"] ?? '',
+          title: article["title"] ?? 'No Title',
+          subTitle: article["description"] ?? 'No Description',
+
         );
         articleList.add(articleModel);
       }

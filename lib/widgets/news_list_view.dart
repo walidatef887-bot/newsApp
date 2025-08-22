@@ -6,6 +6,8 @@ import 'package:news_app/services/news_services.dart';
 import 'news_tile.dart';
 
 class NewsListView extends StatefulWidget{
+  const NewsListView({super.key});
+
   @override
   State<NewsListView> createState() => _NewsListViewState();
 }
@@ -25,7 +27,7 @@ class _NewsListViewState extends State<NewsListView> {
   }
 
   Future<void> getData() async {
-    articles =await NewsServices(Dio()).getNews();
+    articles =await NewsServices(Dio()).getNews('business');
     isLoading = false;
     setState(() {
 
